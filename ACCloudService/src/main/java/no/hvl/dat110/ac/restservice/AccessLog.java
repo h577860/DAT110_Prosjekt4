@@ -1,9 +1,9 @@
 package no.hvl.dat110.ac.restservice;
 
+import com.google.gson.Gson;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import com.google.gson.Gson;
 
 public class AccessLog {
 	
@@ -20,26 +20,28 @@ public class AccessLog {
 	public int add(String message) {
 		
 		int id = 0;
-		
+		id=log.size()+1;
+		AccessEntry accessentry = new AccessEntry(id,message);
+		log.put(id, accessentry);
 		return id;
 	}
 		
 	// TODO: retrieve a specific access entry from the log
 	public AccessEntry get(int id) {
 		
-		return null;
+		return log.get(id);
 		
 	}
 	
 	// TODO: clear the access entry log
 	public void clear() {
-		
+		log.clear();
 	}
 	
 	// TODO: return JSON representation of the access log
 	public String toJson () {
-    	
-		String json = null;
+    	Gson gson = new Gson();
+		String json = gson.toJson(log.values());
     	
     	return json;
     }
